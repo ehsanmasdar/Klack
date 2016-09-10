@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "PennappsXIV",
+    "description": "The name of the application"
+  },
+  "appDescription": {
+    "message": "PennappsXIV Project",
+    "description": "The description of the application"
+  }
+}
