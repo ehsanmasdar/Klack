@@ -31,7 +31,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   // console.log(request.key);
 });
 
-chrome.browserAction.setBadgeText({ text: '\'Allo' });
+chrome.browserAction.setBadgeText({ text: '\'0' });
 setInterval(function() {
   console.log("keystrokes:" + keystrokes);
   if (words.length > 1){

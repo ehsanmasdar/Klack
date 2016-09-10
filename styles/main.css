@@ -64,12 +64,12 @@ div{
   font-size:40px;
 }
 
-.reset{
+/*.reset{
     width:50%;
   height:70px;
-  background:red;
+  background-color:red;
   color: white;
-}
+}*/
 
 .footer{
     width:50%;
@@ -89,3 +89,22 @@ background:white;
 color: black;
 font-size: 25px;
 }
+
+button {
+	background-color: #69357D;
+    border: none;
+    color: white;
+	width: 50%;
+	height: 70px;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+	transition-duration: 0.4s;
+}
+button:hover {
+	background-color: red;
+	text-decoration: underline;
+}
+
