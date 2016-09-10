@@ -1,8 +1,4 @@
 document.onkeypress = function (e) {
     e = e || window.event;
-    console.log(e.keyCode);
-    chrome.extension.sendMessage({key: e.keyCode});
+    chrome.extension.sendMessage({key: e.key});
 };
-
-
-console.log('Test Pennapps push');

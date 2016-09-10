@@ -1,12 +1,16 @@
 setInterval(function () {
   chrome.storage.sync.get('live', function(items){
-    document.getElementById("current-speed").innerHTML =  items.live;
+    document.getElementById("current-speed").innerHTML =  items.live.wpm;
   });
   chrome.storage.sync.get('avg', function(items){
-    if (items.avg.length > 0){
+    if (items.avg && items.avg.length > 0){
       var avg = 0;
       for (var i = 0; i< items.avg.length; i++){
+<<<<<<< HEAD
         avg += items.avg[i]	;
+=======
+        avg += items.avg[i].val.wpm;
+>>>>>>> 0e89eab438b5309a7d6dbfa11f3b8a521662f640
       }
       avg /= items.avg.length;
       document.getElementById("average-speed").innerHTML =  avg;
@@ -52,7 +56,10 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById("average-speed").innerHTML = 0;
     });
 });
+<<<<<<< HEAD
 
 function setPerc(value){
 	document.getElementById("dropdown-avg-speed").innerHTML = value;
 }
+=======
+>>>>>>> 0e89eab438b5309a7d6dbfa11f3b8a521662f640

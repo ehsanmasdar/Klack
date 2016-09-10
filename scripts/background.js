@@ -1,38 +1,35 @@
-var keystrokes = 0;
-var localKeystrokes = 0;
+var keystrokes = [];
 var words = [];
 var wordslast = 0;
-var samples = [];
 var maxLength = 7;
 var period = 4000;
 var session = false;
 
+var chars = {'a':0,'b':0,'c':0,'d':0,'e':0,'f':0,'g':0,'h':0,'i':0,'j':0,'l':0,'m':0,'n':0,'o':0,'p':0,'q':0,'r':0,'s':0,'t':0,'u':0,'v':0,'w':0,'x':0,'y':0,'z':0};
 chrome.runtime.onInstalled.addListener(function (details) {
   console.log('previousVersion', details.previousVersion);
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  keystrokes += 1;
-  localKeystrokes += 1;
-  if (request.key == 32){
-    var d = new Date();
+  var d = new Date();
+  keystrokes.push(d.getTime())
+  chars[request.key.toLowerCase()] += 1;
+  if (request.key == ' '){
   	words.push(d.getTime());
 
     wordslast++;
   }
 });
 
-chrome.browserAction.setBadgeText({ text: '\'0' });
+chrome.browserAction.setBadgeText({ text: '0' });
 
 setInterval(function() {
-  console.log("keystrokes:" + keystrokes);
   if (wordslast > 1){
     session = true;
     var num = parseInt((words.length*60)/((words[words.length-1]-words[0])/1000), 10);
-    // var num = 60/((words[words.length-1]-words[0])/words.length/1000); //this line calculates avg time for one word within period
-    // var res = rollingAverage(parseInt(num,10));
+    var keys = parseInt((keystrokes.length*60)/((keystrokes[keystrokes.length-1]-keystrokes[0])/1000), 10);
     chrome.browserAction.setBadgeText({ text: num + ""});
-    chrome.storage.sync.set({'live': num}, function(){
+    chrome.storage.sync.set({'live': {'wpm':num,'cpm':keys}}, function(){
     	 console.log("saved value of " + num);
     	}
     );
@@ -41,13 +38,11 @@ setInterval(function() {
     if (session == true){
       chrome.storage.sync.get('avg', function(items){
         chrome.storage.sync.get('live', function(liveitem){
-          console.log(items);
           if (!items.avg)
             items.avg = []
           var temp = items.avg;
-          temp.push(liveitem.live);
-          console.log(liveitem);
-          console.log(temp);
+          var d = new Date();
+          temp.push({val:liveitem.live, date:d.getTime()});
           chrome.storage.sync.set({'avg': temp }, function(){});
         });
       });
@@ -55,10 +50,37 @@ setInterval(function() {
       session = false;
     }
     else {
-      chrome.storage.sync.set({'live': 0}, function(){});
+      chrome.storage.sync.set({'live': {'wpm':0,'cpm':0}}, function(){});
     }
     words = [];
-    samples = [];
+    keystrokes = [];
+    
+    chrome.storage.sync.get('charstore', function(items){
+      if(items.charstore){
+        var local = items.charstore;
+        for (var key in local) {
+          if (local.hasOwnProperty(key)) {
+            if (chars[key]){
+              local[key] += chars[key];
+            }
+          }
+        }
+        chrome.storage.sync.set({'charstore': local}, function(){});
+        chars = {'a':0,'b':0,'c':0,'d':0,'e':0,'f':0,'g':0,'h':0,'i':0,'j':0,'l':0,'m':0,'n':0,'o':0,'p':0,'q':0,'r':0,'s':0,'t':0,'u':0,'v':0,'w':0,'x':0,'y':0,'z':0};
+      } 
+      else{
+        var local = {'a':0,'b':0,'c':0,'d':0,'e':0,'f':0,'g':0,'h':0,'i':0,'j':0,'l':0,'m':0,'n':0,'o':0,'p':0,'q':0,'r':0,'s':0,'t':0,'u':0,'v':0,'w':0,'x':0,'y':0,'z':0};
+        for (var key in local) {
+          if (local.hasOwnProperty(key)) {
+            if (chars[key]){
+              local[key] += chars[key];
+            }
+          }
+        }
+        chrome.storage.sync.set({'charstore': local}, function(){});
+        chars = {'a':0,'b':0,'c':0,'d':0,'e':0,'f':0,'g':0,'h':0,'i':0,'j':0,'l':0,'m':0,'n':0,'o':0,'p':0,'q':0,'r':0,'s':0,'t':0,'u':0,'v':0,'w':0,'x':0,'y':0,'z':0};
+      }
+    });
     chrome.browserAction.setBadgeText({ text: "0"});
   }
   wordslast = 0;
