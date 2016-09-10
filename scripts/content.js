@@ -1,1 +1,1 @@
-console.log('Hello World from Pennapps');
+console.log('Test Pennapps');
