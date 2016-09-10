@@ -1,24 +1,11 @@
 var keystrokes = 0;
 var localKeystrokes = 0;
 var words = [];
+var wordslast = 0;
 var samples = [];
 var maxLength = 7;
-var period = 7000;
-
-function rollingAverage(n){
-  if (samples.length < maxLength){
-    samples.push(n)
-  }
-  else {
-    samples.shift();
-    samples.push(n);
-  }
-  var avg = 0;
-  for (var i = 0; i < samples.length; i++){
-    avg += samples[i];
-  }
-  return avg/samples.length;
-}
+var period = 4000;
+var session = false;
 
 chrome.runtime.onInstalled.addListener(function (details) {
   console.log('previousVersion', details.previousVersion);
@@ -30,43 +17,49 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.key == 32){
     var d = new Date();
   	words.push(d.getTime());
-    // console.log(words);
+
+    wordslast++;
   }
-  // console.log(request.key);
 });
 
 chrome.browserAction.setBadgeText({ text: '\'0' });
 
 setInterval(function() {
   console.log("keystrokes:" + keystrokes);
-  if (words.length > 1){
-    var num = 60/((words[words.length-1]-words[0])/words.length/1000); //this line calculates avg time for one word within period
-
-    // console.log('alarm');
-    // console.log(words[words.length-1], words[0],words.length,((words[words.length-1]-words[0])/words.length/1000));
-    // console.log('Number:' + num);
-    // console.log('Words.length:' + words.length)
-
-    var res = rollingAverage(parseInt(num,10));
-    
-    
-    
-    console.log(samples);
-    console.log(res);
-    chrome.browserAction.setBadgeText({ text: parseInt(res,10) + ""});
-    chrome.storage.sync.set({'avg': parseInt(res, 10)}, function(){
-    	console.log("saved value of " + parseInt(res, 10))
+  if (wordslast > 1){
+    session = true;
+    var num = parseInt((words.length*60)/((words[words.length-1]-words[0])/1000), 10);
+    // var num = 60/((words[words.length-1]-words[0])/words.length/1000); //this line calculates avg time for one word within period
+    // var res = rollingAverage(parseInt(num,10));
+    chrome.browserAction.setBadgeText({ text: num + ""});
+    chrome.storage.sync.set({'live': num}, function(){
+    	 console.log("saved value of " + num);
     	}
     );
-    words = [];
-    localKeystrokes = 0;
   }
   else{
+    if (session == true){
+      chrome.storage.sync.get('avg', function(items){
+        chrome.storage.sync.get('live', function(liveitem){
+          console.log(items);
+          if (!items.avg)
+            items.avg = []
+          var temp = items.avg;
+          temp.push(liveitem.live);
+          console.log(liveitem);
+          console.log(temp);
+          chrome.storage.sync.set({'avg': temp }, function(){});
+        });
+      });
+      console.log("session ended");
+      session = false;
+    }
+    else {
+      chrome.storage.sync.set({'live': 0}, function(){});
+    }
     words = [];
-    var res = rollingAverage(0);
-    console.log(samples);
-    console.log(res);
-    chrome.browserAction.setBadgeText({ text: parseInt(res,10) + ""});
+    samples = [];
+    chrome.browserAction.setBadgeText({ text: "0"});
   }
+  wordslast = 0;
 }, period);
-console.log('\'Allo \'Allo! Event Page for Browser Action');
