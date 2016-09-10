@@ -1,4 +1,5 @@
 var keystrokes = 0;
+var localKeystrokes = 0;
 var words = [];
 var samples = [];
 var maxLength = 7;
@@ -18,11 +19,14 @@ function rollingAverage(n){
   }
   return avg/samples.length;
 }
+
 chrome.runtime.onInstalled.addListener(function (details) {
   console.log('previousVersion', details.previousVersion);
 });
+
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   keystrokes += 1;
+  localKeystrokes += 1;
   if (request.key == 32){
     var d = new Date();
   	words.push(d.getTime());
@@ -32,19 +36,30 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 });
 
 chrome.browserAction.setBadgeText({ text: '\'0' });
+
 setInterval(function() {
   console.log("keystrokes:" + keystrokes);
   if (words.length > 1){
-    var num = 60/((words[words.length-1]-words[0])/words.length/1000);
+    var num = 60/((words[words.length-1]-words[0])/words.length/1000); //this line calculates avg time for one word within period
+
     // console.log('alarm');
     // console.log(words[words.length-1], words[0],words.length,((words[words.length-1]-words[0])/words.length/1000));
     // console.log('Number:' + num);
     // console.log('Words.length:' + words.length)
+
     var res = rollingAverage(parseInt(num,10));
+    
+    
+    
     console.log(samples);
     console.log(res);
     chrome.browserAction.setBadgeText({ text: parseInt(res,10) + ""});
+    chrome.storage.sync.set({'avg': parseInt(res, 10)}, function(){
+    	console.log("saved value of " + parseInt(res, 10))
+    	}
+    );
     words = [];
+    localKeystrokes = 0;
   }
   else{
     words = [];
