@@ -1,7 +1,6 @@
 document.onkeypress = function (e) {
     e = e || window.event;
-    // use e.keyCode
-    console.log(e.keyCode)
+    chrome.extension.sendMessage({key: e.keycode});
 };
 
 
