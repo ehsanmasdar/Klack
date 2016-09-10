@@ -1,12 +1,12 @@
 setInterval(function () {
   chrome.storage.sync.get('live', function(items){
-    document.getElementById("current-speed").innerHTML =  items.live;
+    document.getElementById("current-speed").innerHTML =  items.live.wpm;
   });
   chrome.storage.sync.get('avg', function(items){
-    if (items.avg.length > 0){
+    if (items.avg && items.avg.length > 0){
       var avg = 0;
       for (var i = 0; i< items.avg.length; i++){
-        avg += items.avg[i];
+        avg += items.avg[i].val.wpm;
       }
       avg /= items.avg.length;
       document.getElementById("average-speed").innerHTML =  avg;
