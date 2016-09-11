@@ -4,8 +4,10 @@ setInterval(updatewindow(),4000);
 
 function updatewindow() {
   chrome.storage.sync.get('live', function(items){
-    document.getElementById("current-speed").innerHTML =  items.live.wpm;
     document.getElementById("current-cpm").innerHTML = items.live.cpm;
+  });
+  chrome.storage.sync.get('charstore', function(items){
+    document.getElementById("total-text").innerHTML = items.charstore[' '];
   });
   chrome.storage.sync.get('avg', function(items){
     if (items.avg && items.avg.length > 0){

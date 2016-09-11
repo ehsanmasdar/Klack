@@ -1,10 +1,10 @@
 {
   "appName": {
-    "message": "PennappsXIV",
+    "message": "Klack",
     "description": "The name of the application"
   },
   "appDescription": {
-    "message": "PennappsXIV Project",
+    "message": "Smart typing analytics for Chrome",
     "description": "The description of the application"
   }
 }
