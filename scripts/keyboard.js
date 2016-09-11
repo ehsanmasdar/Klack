@@ -3,6 +3,7 @@ function heatMapColorforValue(value){
   return "rgb( 255," + h + ", " + h + ")";
 }
 setInterval(function () {
+  updatewindow();
   chrome.storage.sync.get('charstore', function(items){
     var local = items.charstore;
     console.log(local);

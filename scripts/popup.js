@@ -20,7 +20,7 @@ function updatewindow() {
       }
       avg /= items.avg.length;
       // computePerc(avg);
-      document.getElementById("average-speed").innerHTML =  avg;
+      document.getElementById("average-speed").innerHTML =  parseInt(avg,10);
     }
     else {
       document.getElementById("average-speed").innerHTML = 0;
