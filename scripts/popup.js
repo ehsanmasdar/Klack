@@ -144,7 +144,7 @@ function computePerc(avg){
     setPerc("99");
   }else if (108 < avg && avg <=112){
     setPerc("99");
-  }else if (110 < avg && avg <=114){
+  }else if (110 < avg){
     setPerc("100");
   }
 }
