@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     var drop = document.getElementById('drop');
     drop.addEventListener('click', function() {
-      var newURL = "chrome-extension://mkgbiggmccflndfmlofhjfgedkidkhii/index.html";
+      var newURL = "chrome-extension://" + chrome.runtime.id + "/index.html";
       chrome.tabs.create({ url: newURL });
     });
 });
