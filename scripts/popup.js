@@ -1,6 +1,11 @@
-setInterval(function () {
+updatewindow();
+
+setInterval(updatewindow(),4000);
+
+function updatewindow() {
   chrome.storage.sync.get('live', function(items){
     document.getElementById("current-speed").innerHTML =  items.live.wpm;
+    document.getElementById("current-cpm").innerHTML = items.live.cpm;
   });
   chrome.storage.sync.get('avg', function(items){
     if (items.avg && items.avg.length > 0){
@@ -21,9 +26,7 @@ setInterval(function () {
     }
   });
       
-  },500);
-
-
+  }
 document.addEventListener('DOMContentLoaded', function() {
     var reset = document.getElementById('reset');
     // onClick's logic below:
@@ -145,6 +148,6 @@ function computePerc(avg){
   }else if (108 < avg && avg <=112){
     setPerc("99");
   }else if (110 < avg){
-    setPerc("100");
+    setPerc("99");
   }
 }
