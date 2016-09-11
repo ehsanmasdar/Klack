@@ -28,7 +28,9 @@ a:hover:not(.active) {
 .active {
 background-color:#69357D;
 }
-
+.logo{
+	padding-top: 7px;
+}
 .one {
 	width: 50%;
 	height: 50%;

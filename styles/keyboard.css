@@ -1,9 +1,7 @@
 ::selection{background-color:none; color:inherit;}
-
 body{
-  background-color: #14B524; 
+  margin: 0px;
 }
-
 .keyboard{
   margin: 0px auto;
   border-radius: 9px;
