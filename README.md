@@ -1,0 +1,4 @@
+# Klack
+Until now, the only way someone was able to determine their typing speed was by utilizing a website that tracked your typing speed as you typed furiously in short one to two minute bursts. However, Klack is the first extension that allows you to track your keyboard metrics over time, providing a more accurate representation of your day-to-day typing speed. In addition to tracking your typing speed over time, Klack also provides the user with a heatmap of total keystrokes, allowing keyboard enthusiasts to determine which keys undergo the most wear and tear and adjust their typing habits for maximum efficiency.
+
+Klack was conceived during a late-night brainstorming session at Pennapps XIV at the University of Pennsylvania. It was designed by Ehsan Asdar, Maki Chung, Katie Jiang and Jenny Ma.
