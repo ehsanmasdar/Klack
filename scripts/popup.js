@@ -3,13 +3,14 @@ updatewindow();
 setInterval(updatewindow(),4000);
 
 function updatewindow() {
-  chrome.storage.sync.get('live', function(items){
-    document.getElementById("current-cpm").innerHTML = items.live.cpm;
-  });
+  // chrome.storage.sync.get('live', function(items){
+  //   document.getElementById("current-cpm").innerHTML = items.live.cpm;
+  // });
   chrome.storage.sync.get('charstore', function(items){
     document.getElementById("total-text").innerHTML = items.charstore[' '];
   });
   chrome.storage.sync.get('avg', function(items){
+    console.log(items);
     if (items.avg && items.avg.length > 0){
       var avg = 0;
       for (var i = 0; i< items.avg.length; i++){
@@ -18,13 +19,11 @@ function updatewindow() {
 
       }
       avg /= items.avg.length;
-      computePerc(avg);
+      // computePerc(avg);
       document.getElementById("average-speed").innerHTML =  avg;
-      document.getElementById("dropdown-avg-speed").innerHTML = avg;
     }
     else {
       document.getElementById("average-speed").innerHTML = 0;
-      document.getElementById("dropdown-avg-speed").innerHTML = 0;
     }
   });
       
@@ -35,6 +34,11 @@ document.addEventListener('DOMContentLoaded', function() {
     reset.addEventListener('click', function() {
       chrome.storage.sync.set({'avg':[]}, function(){})
       document.getElementById("average-speed").innerHTML = 0;
+    });
+    var drop = document.getElementById('drop');
+    drop.addEventListener('click', function() {
+      var newURL = "chrome-extension://mkgbiggmccflndfmlofhjfgedkidkhii/index.html";
+      chrome.tabs.create({ url: newURL });
     });
 });
 

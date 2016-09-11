@@ -5,8 +5,6 @@ body{
 }
 
 .keyboard{
-  width:800px; height: 260px;
-  background-color: #111;
   margin: 0px auto;
   border-radius: 9px;
   padding: 30px;
