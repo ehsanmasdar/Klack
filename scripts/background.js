@@ -5,7 +5,7 @@ var maxLength = 7;
 var period = 4000;
 var session = false;
 
-var chars = {'a':0,'b':0,'c':0,'d':0,'e':0,'f':0,'g':0,'h':0,'i':0,'j':0,'l':0,'m':0,'n':0,'o':0,'p':0,'q':0,'r':0,'s':0,'t':0,'u':0,'v':0,'w':0,'x':0,'y':0,'z':0};
+var chars = {'a':0,'b':0,'c':0,'d':0,'e':0,'f':0,'g':0,'h':0,'i':0,'j':0,'k':0,'l':0,'m':0,'n':0,'o':0,'p':0,'q':0,'r':0,'s':0,'t':0,'u':0,'v':0,'w':0,'x':0,'y':0,'z':0};
 chrome.runtime.onInstalled.addListener(function (details) {
   console.log('previousVersion', details.previousVersion);
 });
@@ -54,34 +54,33 @@ setInterval(function() {
     }
     words = [];
     keystrokes = [];
-    
-    chrome.storage.sync.get('charstore', function(items){
-      if(items.charstore){
-        var local = items.charstore;
-        for (var key in local) {
-          if (local.hasOwnProperty(key)) {
-            if (chars[key]){
-              local[key] += chars[key];
-            }
-          }
-        }
-        chrome.storage.sync.set({'charstore': local}, function(){});
-        chars = {'a':0,'b':0,'c':0,'d':0,'e':0,'f':0,'g':0,'h':0,'i':0,'j':0,'l':0,'m':0,'n':0,'o':0,'p':0,'q':0,'r':0,'s':0,'t':0,'u':0,'v':0,'w':0,'x':0,'y':0,'z':0};
-      } 
-      else{
-        var local = {'a':0,'b':0,'c':0,'d':0,'e':0,'f':0,'g':0,'h':0,'i':0,'j':0,'l':0,'m':0,'n':0,'o':0,'p':0,'q':0,'r':0,'s':0,'t':0,'u':0,'v':0,'w':0,'x':0,'y':0,'z':0};
-        for (var key in local) {
-          if (local.hasOwnProperty(key)) {
-            if (chars[key]){
-              local[key] += chars[key];
-            }
-          }
-        }
-        chrome.storage.sync.set({'charstore': local}, function(){});
-        chars = {'a':0,'b':0,'c':0,'d':0,'e':0,'f':0,'g':0,'h':0,'i':0,'j':0,'l':0,'m':0,'n':0,'o':0,'p':0,'q':0,'r':0,'s':0,'t':0,'u':0,'v':0,'w':0,'x':0,'y':0,'z':0};
-      }
-    });
     chrome.browserAction.setBadgeText({ text: "0"});
   }
+  chrome.storage.sync.get('charstore', function(items){
+    if(items.charstore){
+      var local = items.charstore;
+      for (var key in local) {
+        if (local.hasOwnProperty(key)) {
+          if (chars[key]){
+            local[key] += chars[key];
+          }
+        }
+      }
+      chrome.storage.sync.set({'charstore': local}, function(){});
+      chars = {'a':0,'b':0,'c':0,'d':0,'e':0,'f':0,'g':0,'h':0,'i':0,'j':0,'k':0,'l':0,'m':0,'n':0,'o':0,'p':0,'q':0,'r':0,'s':0,'t':0,'u':0,'v':0,'w':0,'x':0,'y':0,'z':0};
+    } 
+    else{
+      var local = {'a':0,'b':0,'c':0,'d':0,'e':0,'f':0,'g':0,'h':0,'i':0,'j':0,'k':0,'l':0,'m':0,'n':0,'o':0,'p':0,'q':0,'r':0,'s':0,'t':0,'u':0,'v':0,'w':0,'x':0,'y':0,'z':0};
+      for (var key in local) {
+        if (local.hasOwnProperty(key)) {
+          if (chars[key]){
+            local[key] += chars[key];
+          }
+        }
+      }
+      chrome.storage.sync.set({'charstore': local}, function(){});
+      chars = {'a':0,'b':0,'c':0,'d':0,'e':0,'f':0,'g':0,'h':0,'i':0,'j':0, 'k':0, 'l':0,'m':0,'n':0,'o':0,'p':0,'q':0,'r':0,'s':0,'t':0,'u':0,'v':0,'w':0,'x':0,'y':0,'z':0};
+    }
+  });
   wordslast = 0;
 }, period);
