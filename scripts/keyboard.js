@@ -27,7 +27,7 @@ setInterval(function () {
       }
     }
     for (var key in local) {
-      if (local.hasOwnProperty(key)) {
+      if (local.hasOwnProperty(key) && key != ' ') {
         local[key] = local[key]/max;
         document.getElementById(key.toUpperCase().charCodeAt(0)).style.backgroundColor = heatMapColorforValue(local[key]);
       }
