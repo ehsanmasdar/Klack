@@ -31,29 +31,15 @@ background-color:#69357D;
 .logo{
 	padding-top: 7px;
 }
-.one {
+.one, .two, .three, .four {
 	width: 50%;
 	height: 50%;
-	background-color: red;
-}
-.two {
-	width: 50%;
-	height: 50%;
-	background-color:yellow;
-}
-.three {
-	width: 50%;
-	height: 50%;
-	background-color:blue;
-}
-.four {
-	width: 50%;
-	height: 50%;
-	background-color: green;
+	border: 3px solid #69357D;
 }
 table {
 	width: 100%;
 	height: 550px;
+	background-color: lavender;
 }
 .white {
 	color:#999;

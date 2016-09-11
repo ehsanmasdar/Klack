@@ -3,7 +3,6 @@ body{
   margin: 0px;
 }
 .keyboard{
-  margin: 0px auto;
   border-radius: 9px;
   padding: 30px;
   color: #eee;
@@ -24,8 +23,8 @@ body{
   transition: box-shadow 0.7s ease;
 }
 
-.section-a{width:650px; height:260px; float:left;}
-.section-b{width:150px; height:260px; float:left;}
+.section-a{width:650px; height:200px; float:left;}
+.section-b{width:150px; height:200px; float:left;}
 
 .function{font-size: 12px; width:30px; height:30px; margin-bottom:15px;}
 .small{font-size:10px; line-height:13px; text-align: center; padding:0 5px; padding-top:2px; height:28px !important;}
